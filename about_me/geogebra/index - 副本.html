@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>HowardZhangdqs</title>
+		<link rel="shortcut icon" href="favicon.ico">
+		<link rel="stylesheet" type="text/css" href="../main_style.css">
+	</head>
+	<body>
+		<iframe id="bbg" src="https://www.geogebra.org/calculator/enpa4ub7?embed" width="100%" height="100%" allowfullscreen style="border: 0px solid #e4e4e4;border-radius: 0px;" frameborder="0"></iframe>
+		<script>
+			var bbg = document.getElementById('bbg'),
+				cw, ch;
+			function loop() {
+				cw = window.innerWidth,
+				ch = window.innerHeight;
+				bbg.width = cw;
+				bbg.height = ch;
+			}
+			setInterval(function(){
+				loop();
+			},0);
+		</script>
+	</body>
+</html>

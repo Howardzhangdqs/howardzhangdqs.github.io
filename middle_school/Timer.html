@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>倒计时</title>
+		<link rel="shortcut icon" href="favicon.ico">
+		<link rel="stylesheet" type="text/css" href="../main_style.css">
+		<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+	</head>
+	<body>
+		<ul style="background-color: #000;">
+			<li><a href="index.html">返回首页</a></li>
+		</ul>
+		<div style="margin-top:0px; background-color:#000000;">
+			<h1 id = "date" class="normal" onclick="accurate()">考试倒计时</h1>
+			<script src="考试倒计时.js"></script>
+		</div>
+		<div style="margin-top:0px; background-color:#000000;">
+			<h1 id = "timer" class="active" onclick="hide()">自习还未开始</h1>
+			<script src="计时器.js"></script>
+		</div>
+		
+		<div id = "div1" style="width:100%;position:absolute;">
+			<div style="height:200px;width:20%;float:left;"></div>
+			
+			<div style="height:200px;width:35%;float:left;">
+				<h1 id = "textl" class="smaller" contenteditable="true" style="text-align:left">语文：1. <br>　　　2. <br>数学：1. <br>　　　2. <br>英语：1. <br>　　　2. <br>物理：1. <br>化学：1. <br></h1>
+			</div>
+			<div style="width:5%;float:left;"></div>
+			
+			<div style="width:30%;float:left;">
+				<h1 id = "textr" class="smaller" contenteditable="true">
+					min<br>
+					min<br>
+					min<br>
+					min<br>
+					min<br>
+					min<br>
+					min<br>
+					min<br>
+				</h1>
+			</div>
+			<div style="width:100%;float:left;height:200px"></div>
+			<div style="width:100%;float:left;">
+				<h1 class="smaller" type="button" onclick="Share()">生成JSON</h1>
+				<div style="float:left; position:relative; left:50%;">
+					<ul style="float:left; position:relative; right:50%; background-color: #000;">
+						<input id="share"></input>
+					</ul>
+				</div>
+			</div>
+			<script src="分享.js"></script>
+			<script src="文本提取.js"></script>
+		</div>
+	</body>
+</html>
