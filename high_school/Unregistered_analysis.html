@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>未签到分析</title>
+        <script>
+            var data, ddata;
+            var namelist = {
+                "刘豫皖": false, "齐欣怡": false, "李予心": false, "杨睿怡": false, "吴嘉雯": false, "沈筱祎": false,
+                "张伊容": false, "张煜琀": false, "张嘉怡": false, "邵亦涵": false, "邵思晴": false, "罗怡霖": false,
+                "金品希": false, "秦黄蕊": false, "桂诗韵": false, "顾思仪": false, "黄语菲": false, "曹锦秀": false,
+                "梁彦欣": false, "温璐宁": false, "卫澜"  : false, "王屹杨": false, "邓湛"  : false, "史炜乐": false,
+                "任思渔": false, "严睿扬": false, "李晟淏": false, "佘轶舟": false, "张乙夏": false, "张金皓": false,
+                "张既同": false, "郁佳一": false, "金泰仰": false, "周津仕": false, "赵国桓": false, "费云帆": false,
+                "蒋奕铭": false, "魏舒天": false, "李欣宜": false, "吕一飞": false
+            };
+            analyze = function() {
+                let s = "";
+                for (let i in namelist) namelist[i] = false;
+                data = document.getElementById("input").value;
+                for (let i in namelist) if (data.search(i) != -1) namelist[i] = true; else s += i + "\n";
+                document.getElementById("output").innerText = s; console.log(s);
+            }
+        </script>
+    </head>
+    <body>
+        <textarea id="input" oninput="analyze()" rows="30" cols="40" placeholder="请直接把钉钉中“导数据”复制出来的东西复制在这里"></textarea>
+        <p id="output"></p>
+    </body>
+</html>

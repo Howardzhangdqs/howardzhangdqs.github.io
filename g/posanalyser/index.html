@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<script type="text/javascript" src="https://webapi.amap.com/maps?v=2.0&key=81852935975b3862f415d25bc07d2ec6"></script>
+		<link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css"/>
+		<style type="text/css">
+			html {
+				height: 100%
+			}
+			
+			body {
+				height: 100%;
+				margin: 0px;
+				padding: 0px
+			}
+			
+			#container {
+				height: 90%
+			}
+			
+			/* 信息窗体 */
+			.custom-input-card {
+				width: 14rem;
+				text-align:center;
+			}
+			
+			.input-item {
+				text-align:center;
+			}
+
+			.custom-input-card .btn:last-child {
+				margin:0 auto;
+			}
+
+			.content-window-card {
+				position: relative;
+				width: 23rem;
+				padding: 0.75rem 0 0 1.25rem;
+				box-shadow: none;
+				bottom: 0;
+				left: 0;
+			}
+
+			.content-window-card p {
+				height: 2rem;
+			}
+		</style>
+		<title>Document</title>
+	</head>
+	<body>
+		<div id="container" style="display: none"></div>
+		<input id="file-input" multiple class="btn" type="file" style="display:none"/>
+		<input id="file-input2" value="点此上传文件" class="btn" type="button" onclick="document.getElementById('file-input').click()"/>
+		<input id="map" value="可视化" class="btn" type="button" style="display:none"/>
+		<br>
+		<div id="file-output" style="font-family: Consolas"></div>
+		
+		<!--div class="input-card custom-input-card">
+			<h4>打开/关闭信息窗体</h4>
+			<div class="input-item">
+				<input type="button" class="btn" value="关闭所有信息窗体" onClick="javascript:infoWindow.close()"/>
+			</div>
+		</div-->
+		
+		<script type="text/javascript" src="exif.js"></script>
+		<script type="text/javascript" src="GPS.js"></script>
+		<script>
+			var data = {Longitude: 0, Latitude: 0, Altitude: 0};
+			var s1 = "", s2 = "";
+			var shows = "";
+			var files;
+			var Data = [];
+			var node_num = 0;
+			var file_num = 0;
+			
+			var icon  = 'https://webapi.amap.com/theme/v1.3/markers/n/mark_b.png';
+			var iconr = 'https://webapi.amap.com/theme/v1.3/markers/n/mark_r.png';
+			var map;
+			
+			var geocoder;
+			
+			GPS.MODE = "WGS 1984";
+			
+			document.getElementById("map").onclick = function() {
+				document.getElementById("container").style.display = "block";
+				map = new AMap.Map('container', {
+					zoom: 11, //级别
+					//center: [121.42275397222222, 31.138569999999998], //中心点坐标
+					viewMode: '3D' //使用3D视图
+				});
+				map.plugin(["AMap.Scale"],function(){
+					var scale = new AMap.Scale();
+					map.addControl(scale);
+				});
+				map.plugin(["AMap.ToolBar"],function(){
+					//加载工具条
+					var tool = new AMap.ToolBar();
+					map.addControl(tool);
+				});
+				map.plugin(["AMap.MouseTool"],function(){
+					var ruler = new AMap.RangingTool(map);
+				});
+				/*
+				map.plugin(["AMap.Geocoder"],function(){
+					geocoder = new AMap.Geocoder({
+						extensions: "all"
+					});
+				});
+				*/
+				(new Function(s1))();
+				(new Function(s2))();
+				
+				for (let i in Cluster) {
+					let Longitude = Cluster[i].position[0] / Cluster[i].val;
+					let Latitude  = Cluster[i].position[1] / Cluster[i].val;
+					let Altitude  = Cluster[i].position[2] / Cluster[i].val;
+					if (Altitude == NaN) Altitude = 0;
+					/*
+					geocoder.getAddress([Longitude, Latitude], function(status, result) {
+						if (status === 'complete' && result.regeocode) {
+							let taddress = result.regeocode.formattedAddress;
+							document.getElementById('address').value = address;
+							console.log(taddress);
+							RCluster.push({
+								position: [Longitude, Latitude, Altitude],
+								address: taddress
+							});
+						} else console.error('根据经纬度查询地址失败');
+					});
+					*/
+				}
+			}
+			
+			var public_substr = function (str_1, str_2) {
+				if (str_1 == "" || str_2 == "") return "";
+				let c = new Array(str_1.length);
+				let max = 0;
+				let maxi = 0;
+				for (let j = 0; j < str_2.length; j ++){
+					for (let i = str_1.length - 1; i >= 0; i --) {
+						if (str_1.charAt(i) == str_2.charAt(j)) {
+							if (i == 0 || j == 0) c[i] = 1; else c[i] = c[i - 1] + 1; 
+						} else c[i] = 0;
+						if (c[i] > max) max = c[i], maxi = i;
+					}
+				}
+				if (max == 0) return "";
+				return (str_1.substr(maxi - max + 1, max)).trim();
+			}
+			
+			var Cluster  = [];
+			var RCluster = [];
+			/* 元素设计
+			{
+				content: 文件名称,
+				position: [经度, 纬度, 海拔],
+				number: 节点序号
+			}
+			
+			{
+				val: 权值,
+				position: 坐标和,
+				number: [节点序号列表]
+			}
+			*/
+			
+			var Sqr = (x) => {return x * x}
+			
+			var Distance = function(obj1, obj2) {
+				//console.log(obj1); console.log(obj2);
+				return Math.sqrt(Sqr(obj1.position[0] - obj2.position[0]) + Sqr(obj1.position[1] - obj2.position[1]));
+			}
+			
+			var Clustering = function(obj) {
+				let f = false;
+				for (let i in Data) {
+					if (Distance(Data[i], obj) <= 0.001) {
+						for (let j in Cluster) {
+							for (let k in Cluster[j].number) {
+								if (Cluster[j].number[k] == Data[i].number) {
+									Cluster[j].number.push(obj.number); Cluster[j].val ++;
+									Cluster[j].position[0] += obj.position[0];
+									Cluster[j].position[1] += obj.position[1];
+									Cluster[j].position[2] += obj.position[2];
+									f = true; break;
+								}
+							}
+							if (f) break;
+						}
+						//Data[i].number
+					}
+					//console.log((Distance(Data[i], obj)));
+					if (f) break;
+				}
+				if (! f) Cluster.push({
+					val: 1,
+					position: obj.position,
+					number: [obj.number]
+				});
+				Data.push(obj);
+				//console.log(Data);
+			}
+			
+			var After_Merge = function() {
+				for (let i in Cluster) {
+					for (let j = 0; j <= Cluster[i].number.length - 2; j ++) {
+						for (let k = j + 1; k <= Cluster[i].number.length - 1; k ++) {
+							
+						}
+					}
+				}
+			}
+			
+			/*
+			var Merge = function(obj1, obj2) {
+				Cluster[obj1].val += Cluster[obj2].val;
+				Cluster[obj1].position[0] += Cluster[obj2].position[0];
+				Cluster[obj1].position[1] += Cluster[obj2].position[1];
+				Cluster[obj1].position[2] += Cluster[obj2].position[2];
+				Cluster[obj1].number = Cluster[obj2].number.concat(Cluster[obj1].number);
+				console.log(Cluster);
+			}
+			
+			var Find_node = function(num) {
+				for (let i in Data) if (Data[i].number == num) return i;
+			}
+			
+			var After_Merge = function() {
+				for (let i in Cluster) {
+					for (let j in Cluster[i].number[j]) {
+						
+					}
+				}
+			}
+			*/
+			
+			var Analyze_Cluster = function() {
+				console.log(Cluster);
+				s2 = "";
+				for (let i in Cluster) {
+					console.log(Cluster[i]);
+					let Longitude = Cluster[i].position[0] / Cluster[i].val;
+					let Latitude  = Cluster[i].position[1] / Cluster[i].val;
+					let Altitude  = Cluster[i].position[2] / Cluster[i].val;
+					if (Altitude == NaN) Altitude = 0;
+					
+					s2 += "map.add(new AMap.Marker({icon: iconr, position: [" +
+						Longitude + ", " + Latitude + ", " + Altitude +
+						"], draggable: false, cursor: 'pointer', anchor: 'bottom-center', label: {content:'" +
+						i + "', direction: 'top'}}));\n";
+				}
+			}
+			
+			var formatter = function(Altitude, Latitude, Longitude, tcontent) {
+				let tconfig = {
+					icon: icon,
+					position: [Longitude, Latitude, Altitude],
+					draggable: false,
+					cursor: 'pointer',
+					anchor: 'bottom-center',
+					label: {
+						content:tcontent,
+						direction: 'right'
+					}
+				};
+				return JSON.stringify("map.add(new AMap.Marker(" + tconfig + "));\n");
+			}
+			
+			// 信息窗体
+			function openInfo() {
+				var info = [
+					"<div class='input-card content-window-card'><div></div>",
+					"<div style=\"padding:7px 0px 0px 0px;\"><h4>高德软件</h4>",
+					"<p class='input-item'>电话 : 010-84107000   邮编 : 100102</p>",
+					"<p class='input-item'>地址 :北京市朝阳区望京阜荣街10号首开广场4层</p></div></div>"
+				].join("");
+
+				infoWindow = new AMap.InfoWindow({
+					content: info
+				});
+
+				infoWindow.open(map, map.getCenter());
+			}
+			
+			document.getElementById("file-input").onchange = async function(e) {
+				files = e.target.files;
+				s = "";
+				shows = "";
+				document.getElementById("file-output").innerText = shows;
+				for (let i in files) {
+					let file = files[i];
+					if (file && file.name) {
+						try {
+							await EXIF.getData(file, async function() {
+								
+								let Altitude, Latitude, Longitude;
+								Altitude  = await EXIF.getTag(this, "GPSAltitude" );
+								Latitude  = await EXIF.getTag(this, "GPSLatitude" );
+								Longitude = await EXIF.getTag(this, "GPSLongitude");
+								
+								if (Latitude != undefined || Longitude != undefined) {
+									Latitude  = (( Latitude[0] + ((1.0 *  Latitude[2] / 60) +  Latitude[1]) / 60));
+									Longitude = ((Longitude[0] + ((1.0 * Longitude[2] / 60) + Longitude[1]) / 60));
+									
+									if (Altitude == undefined) Altitude = 0;
+									
+									shows += "GPS: [" + Longitude + ", " + Latitude + ", " + Altitude + "], ";
+									
+									let t = GPS.gcj_encrypt(Latitude, Longitude);
+									Longitude = t.lon, Latitude = t.lat;
+									
+									node_num ++;
+									
+									s1 += "map.add(new AMap.Marker({icon: icon, position: [" +
+										Longitude + ", " + Latitude + ", " + Altitude +
+										"], draggable: false, cursor: 'pointer', anchor: 'bottom-center', label: {content:'" +
+										node_num + "', direction: 'right'}}));\n";
+										
+									shows += "position: [" + Longitude + ", " + Latitude + ", " + Altitude + "], " + 
+										"file name: '" + file.name + "'\n";
+									
+									Clustering({
+										content: file.name,
+										position: [Longitude, Latitude, Altitude],
+										number: node_num
+									});
+									
+									document.getElementById("file-output").innerText = shows;
+								}
+								
+								file_num ++;
+								console.log(file_num, i, files.length);
+								//console.log(files.length);
+								if (file_num == files.length) {
+									Analyze_Cluster();
+									After_Merge();
+									console.log("READING FINNISHED");
+									document.getElementById("map").style.display = "";
+								}
+							});
+							
+						} catch {}
+					}
+				}
+			}
+		</script>
+	</body>
+</html>

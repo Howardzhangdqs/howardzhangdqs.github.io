@@ -1,0 +1,58 @@
+.tb_sbox {
+    transition: border 0.2s;
+}
+
+.tb_sbox:hover {
+    box-shadow: #FF0000 0px 0px 3px;
+}
+
+.nb_sbox {
+    cursor: not-allowed;
+    transition: border 0.2s;
+}
+
+.nb_sbox:hover {
+    box-shadow: #00FF00 0px 0px 3px;
+}
+
+#n10 {
+    display: none;
+}
+
+.boxx {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+button {
+    padding: 6px;
+    border: 1px solid #FFF;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    -khtml-border-radius: 10px;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid transparent;
+    font-weight: 900;
+    background-color: rgb(240, 240, 240);
+    transition: 0.2s;
+}
+
+button:hover {
+    background-color: rgb(220, 220, 220);
+}
+
+code {
+    background-color: #f3f4f4;
+    padding: 0 2px 0 2px;
+}
+
+.cancell {
+    position: absolute;
+    right: 0px;
+    top: -15px;
+    z-index: 1000;
+}

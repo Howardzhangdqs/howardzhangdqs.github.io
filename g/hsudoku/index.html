@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>HSudoku完全破解</title>
+        <link rel="shortcut icon" href="favicon.ico">
+        <script src="http://libs.baidu.com/jquery/1.11.3/jquery.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="index.css" />
+    </head>
+    <body onselectstart="return false">
+        <div class="boxx" style="width: 750px;">
+            <div style="float: left; left: 30%;">
+                <table id="hsu" class="tb_lbox" style="border-spacing: 0px;" align="center"></table>
+                <div style="height: 40px;" align="center"></div>
+                <div style="font-size: 120%; height: 30px;" align="center"><b>数字栏</b></div>
+                <table id="hsbt" class="tb_mbox" align="center" style=""></table>
+            </div>
+            <div id="tb_lcontrol" style="box-shadow: 0px 0px 10px #000000; float: right; width: 360px; height: 426px; border: 1px solid #000000; border-radius: 20px" align="center">
+                <div style="height: 50px"></div>
+                <div id="tb_mcontrol">
+                    <div style="height: 80px"></div>
+                    <table style="border-spacing: 0px;" align="center">
+                        <tbody>
+                            <tr style="height: 60px">
+                                <button id="helper" type="button" style="font-size: 110%;">使用说明</button>
+                            </tr>
+                            <tr style="height: 60px">
+                                <th>
+                                    <button type="button" onclick="clean_sudoku()">清空数独</button>
+                                    <button type="button" onclick="solve_sudoku()">开始计算</button>
+                                    <button type="button" onclick="reduc_sudoku()">还原数据</button>
+                                </th>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div id="sodoku_output"></div>
+                </div>
+            </div>
+        </div>
+        <div id="maskk" style="display: none; position: absolute; background-color: #000; opacity:0.6; width: 100%; height: 100%; z-index: 0; left:0px; top:0px;"></div>
+        <div id="helptxt" class="boxx" style="padding:8px; background-color: #FFF; display: none; box-shadow: 0px 0px 10px #000000; border: 1px solid #000000; border-radius: 20px">
+            <div style="font-size: 90%;">
+				<iframe id="helpiframe" class="helpertxt" style="width: 750px; height:428px; border-radius: 20px" src="HSudoku instructions.html"></iframe>
+                <div align="center"><button id="close-help" type="button" style="border: 2px solid #FF0000;" align="center">关闭</button></div>
+            </div>
+        </div>
+        <div style="position: absolute; bottom: 0px; left: 50%; transform: translate(-50%, -50%); z-index: -1;" align="center">
+            HSudoku v1.0.19<br>© 2021, 2028 HowardZhangdqs GDev, Inc. license
+        </div>
+        <script src="./js/HSudoku-build.js"></script>
+        <script src="./js/HSudoku-Jquery.js"></script>
+        <script src="./js/HSudoku-solver.js"></script>
+    </body>
+</html>
