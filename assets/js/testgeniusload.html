@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+    <head>
+    </head>
+    <body>
+		<script src="geniusload.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			window.onload = function() {
+				geniusload.loadTree([
+					['Font.loadfont', 'Font Awesome 5 Free', "https://www.bootcss.com/p/font-awesome/assets/font/fontawesome-webfont.woff?v=3.0.1"],
+					['Font.loadfont', 'Font Awesome 5 Brands', "https://use.fontawesome.com/releases/v5.11.2/webfonts/fa-brands-400.woff2"],
+					['Js', 'http://libs.baidu.com/jquery/1.11.3/jquery.min.js', [
+						['Js', 'jquery.scrollex.min.js'],
+						['Js', 'breakpoints.min.js', [
+							['Js', 'util.js'],
+							['Js', 'browser.min.js', ['Js', 'jquery.scrolly.min.js']]
+						]],
+						
+					]],
+					['CSS', "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"]
+				]);
+			}
+		</script>
+    </body>
+</html>
