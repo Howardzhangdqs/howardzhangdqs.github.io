@@ -1,0 +1,40 @@
+---
+permalink: /404.html
+---
+
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>404 Page not found</title>
+        <style>
+            .boxx {
+                position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);
+                font-family: Consolas, Helvetica, Arial, sans-serif;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="boxx" align="center">
+            <div style="font-size: 800%;" align="center">404</div>
+            <div style="font-size: 300%;" align="center">Page not Found</div>
+            <br><br>
+            <div id="loc" style="font-size: 100%;" align="center">Your website does not support Java Script</div>
+            <script>
+                var loc = window.location.href;
+                document.getElementById("loc").innerHTML = "The requested URL " + loc + " was not found on this server."
+            </script>
+            <br>
+            <div id="loc" style="font-size: 100%;" align="center">May be this page is STILL UNDER CONSTRUCTION</div>
+            <div id="loc" style="font-size: 100%;" align="center">or</div>
+            <div id="loc" style="font-size: 100%;" align="center">you've typed the WRONG URL</div>
+            <br>
+            <a style="font-size: 200%;" href="https://howardzhangdqs.github.io" align="center">Go to home page</a>
+            <div style="font-size: 150%;" align="center">to explore some (I think) interesting projects or games</div>
+        </div>
+    </body>
+</html>

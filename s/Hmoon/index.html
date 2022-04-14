@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Hmoon 月相仪</title>
+        <script src="../../js/jquery.min.js"></script>
+        <link rel="shortcut icon" href="moon_favicon.ico" />
+        <style>
+            :root {
+                --input-weidth: 100px;
+            }
+
+            div.img {
+                margin: 5px;
+                border: 1px solid #ccc;
+                float: left;
+            }
+
+            input {
+                width: var(--input-weidth);
+            }
+        </style>
+    </head>
+    <body>
+        <div align="center">
+            开始时间
+			<input id="st" placeholder="yyyy-mm-dd" value="">
+            &nbsp;&nbsp;天数
+			<input id="nu" type="number" min="0" max="1000" step="5" value="10">
+            &nbsp;&nbsp;设置图片大小
+			<input id="sz" type="number" min="0" max="10000" step="10" value="220">
+            <button type="button" onclick="changesetting()">更改设置</button>
+        </div>
+        <div id="cont"></div>
+        <script>
+            Date.prototype.format = function(fmt) {
+                var o = {
+                    "M+": this.getMonth() + 1,
+                    "d+": this.getDate(),
+                    "h+": this.getHours(),
+                    "m+": this.getMinutes(),
+                    "s+": this.getSeconds(),
+                    "S": this.getMilliseconds()
+                };
+                if (/(y+)/i.test(fmt)) {
+                    fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+                }
+
+                for (var k in o) {
+                    if (new RegExp("(" + k + ")","i").test(fmt)) {
+                        fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+                    }
+                }
+                return fmt;
+            }
+        </script>
+        <script>
+            var values = {
+                "s_size": 30,
+                "p_size": 220
+            };
+            values.s_size = parseInt($("#nu").val()) - 1;
+            $("#st").attr("value", new Date().format("yyyy-mm-dd"));
+        </script>
+        <script>
+            function changesetting() {
+                var strTime = $("#st").val();
+                values.s_size = parseInt($("#nu").val()) - 1;
+                values.p_size = parseInt($("#sz").val());
+
+                var cont = "";
+                for (var i = 0; i <= values.s_size; i++) {
+                    cont += '<div><div class="img"><img id="' + i + '" src="" alt=""><div id="a' + i + '" align="center"></div></div></div>'
+                }
+                $("#cont").html(cont);
+
+                $("img").css("width", values.p_size + "px");
+                $("img").css("height", values.p_size + "px");
+                $(".img").css("width", values.p_size + "px");
+
+                var nows = new Date();
+                if (strTime != "")
+                    nows = new Date(Date.parse(strTime.replace(/-/g, "/")));
+
+                var tss = nows.getTime();
+                tss = Math.floor(tss / 1000 / 60 / 60 / 24) + 40586.677;
+                console.log(tss);
+
+                for (var i = 0; i <= values.s_size; i++) {
+                    $("#" + i).attr("src", "https://www.heavens-above.com/moonchart.aspx?sz=" + values.p_size + "&mjd=" + (tss + i));
+                    var tstr = nows.format("yyyy-mm-dd");
+                    $("#" + i).attr("alt", tstr);
+                    $("#a" + i).text(tstr);
+                    nows.setDate(nows.getDate() + 1);
+                }
+            }
+            changesetting();
+        </script>
+    </body>
+</html>
