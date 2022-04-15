@@ -22,14 +22,18 @@
 					background-color: #191919 ! important;
 				}
 			}
+			
+			.original {
+				display: none;
+			}
 		</style>
     </head>
     <body>
         <div id="page-content" class="rich_media_area_primary">
             <div class="rich_media_area_primary_inner">
                 <div id="img-content" class="rich_media_wrp">
-                    <h1 class="rich_media_title" id="activity-name">上海人的忍耐已经到了极限</h1>
-                    <div id="meta_content" class="rich_media_meta_list">
+                    <h1 class="rich_media_title" id="activity-name" onclick="showoriginal()">上海人的忍耐已经到了极限</h1>
+                    <div id="meta_content" class="rich_media_meta_list" onclick="showoriginal()">
                         <span id="copyright_logo" class="wx_tap_link js_wx_tap_highlight rich_media_meta icon_appmsg_tag appmsg_title_tag weui-wa-hotarea" wah-hotarea="click">原创</span>
                         <span class="rich_media_meta rich_media_meta_text">普通市民</span>
                         <span class="rich_media_meta rich_media_meta_nickname" id="profileBt" wah-hotarea="click">
@@ -227,8 +231,8 @@
                                     <br>
                                 </p>
                                 <p style="vertical-align: inherit;text-indent: 2em;margin: 10px 10px 5px;line-height: 2em;">
-                                    <span style="font-size: 17px;letter-spacing: 0.5px;font-family: 黑体;">【此处因镜像制作者立场不同而删去78字】</span>
-									<!--前天发布会出来一位民政局的领导，还以为要发布什么惠民政策，结果上来说创建“无疫小区”，滑天下之大稽，为什么不创建“无感冒小区”“无艾滋小区”“无痔疮小区”？-->
+                                    <span class="del" style="font-size: 17px;letter-spacing: 0.5px;font-family: 黑体;">【此处因镜像制作者立场不同而删去78字】</span>
+                                    <span class="original" style="font-size: 17px;letter-spacing: 0.5px;font-family: 黑体;">前天发布会出来一位民政局的领导，还以为要发布什么惠民政策，结果上来说创建“无疫小区”，滑天下之大稽，为什么不创建“无感冒小区”“无艾滋小区”“无痔疮小区”？</span>
 								</p>
                                 <p style="vertical-align: inherit;text-indent: 2em;margin: 10px 10px 5px;line-height: 2em;">
                                     <span style="font-size: 17px;letter-spacing: 0.5px;font-family: 黑体;">得阳性的人有罪吗？</span>
@@ -246,8 +250,8 @@
                                     <span style="font-size: 17px;letter-spacing: 0.5px;font-family: 黑体;">让小区居民怨恨不幸染上阳性的邻居，制造阳性耻感，制造重重障碍，转移矛盾到群众内部，惩罚有阳性的楼栋不解封。</span>
                                 </p>
                                 <p style="vertical-align: inherit;text-indent: 2em;margin: 10px 10px 5px;line-height: 2em;">
-                                    <span style="font-size: 17px;letter-spacing: 0.5px;font-family: 黑体;">【此处因镜像制作者立场不同而删去13字】</span>
-									<!--这不是连坐陪罪制度是什么？-->
+                                    <span class="del" style="font-size: 17px;letter-spacing: 0.5px;font-family: 黑体;">【此处因镜像制作者立场不同而删去13字】</span>
+                                    <span class="original" style="font-size: 17px;letter-spacing: 0.5px;font-family: 黑体;">这不是连坐陪罪制度是什么？</span>
                                 </p>
                                 <p style="vertical-align: inherit;text-indent: 2em;margin: 10px 10px 5px;">
                                     <br>
@@ -258,9 +262,9 @@
                                     </span>
                                 </p>
                                 <p style="vertical-align: inherit;text-indent: 2em;margin: 10px 10px 5px;line-height: 2em;">
-                                    <span style="font-size: 17px;letter-spacing: 0.5px;font-family: 黑体;">【此处因镜像制作者立场不同而删去148字】</span>
-									<!--今天的心情实在沉重，我们热爱的、为之自豪、如此闪耀的城市，为何变得这般黯淡无光？我们付出的忍耐和血泪究竟是不是错付了？这所城市里还有没有像徐汇区志愿者老伯一样敢于据理力争的人？还有没有官员在倾听人民的心声？我们期盼的明天，还要熬多少个14天后才能到来？代价要付出多少，才能换一个求实的人民至上？！-->
-                                </p>
+                                    <span class="del" style="font-size: 17px;letter-spacing: 0.5px;font-family: 黑体;">【此处因镜像制作者立场不同而删去148字】</span>
+                                    <span class="original" style="font-size: 17px;letter-spacing: 0.5px;font-family: 黑体;">今天的心情实在沉重，我们热爱的、为之自豪、如此闪耀的城市，为何变得这般黯淡无光？我们付出的忍耐和血泪究竟是不是错付了？这所城市里还有没有像徐汇区志愿者老伯一样敢于据理力争的人？还有没有官员在倾听人民的心声？我们期盼的明天，还要熬多少个14天后才能到来？代价要付出多少，才能换一个求实的人民至上？！</span>
+								</p>
                                 <p style="vertical-align: inherit;text-indent: 2em;margin: 10px 10px 5px;">
                                     <br>
                                 </p>
@@ -288,6 +292,13 @@
 				return flag;
 			}
 			if (! IsPC()) document.getElementById("page-content").style.zoom = 2.4;
+			
+			var showoriginal = function() {
+				let t = document.querySelectorAll(".del");
+				for (let i = 0; i < t.length; i ++) t[i].style.display = "none";
+				t = document.querySelectorAll(".original");
+				for (let i = 0; i < t.length; i ++) t[i].style.display = "block";
+			}
 		</script>	
     </body>	
 </html>
