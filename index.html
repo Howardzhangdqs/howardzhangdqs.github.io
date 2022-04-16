@@ -31,7 +31,7 @@
                 <a href="#wrapper" class="logo">HowardZhangdqs</a>
             </header>
             <!-- Nav -->
-            <nav id="nav">
+            <nav id="nav" style="border-radius: 10px 10px 0px 0px">
                 <ul class="links">
                     <li class="active">
                         <a href="index.html">About Me</a>
@@ -219,13 +219,11 @@
                 </section>
             </div>
             <!-- Footer -->
-            <footer id="footer">
+            <footer id="footer" style="border-radius: 0px 0px 10px 10px">
                 <section>
                     <section class="alt">
                         <h3>Address</h3>
-                        <p>
-                            Shanghai China<br>中国 上海
-                        </p>
+                        <p>Shanghai China<br>中国 上海</p>
                     </section>
                     <section>
                         <h3>Phone</h3>
@@ -283,6 +281,8 @@
         </div>
         <!-- Scripts -->
 		<script>
+			let baseurl = "https://cdn.jsdelivr.net/gh/HowardZhangdqs/howardzhangdqs.github.io/";
+		
 			option = [
 				['CSS', "assets/css/main.css", (function() {
 					window.setTimeout(function() {
@@ -293,11 +293,11 @@
 				['Font.loadfont', 'Font Awesome 5 Free', "https://www.bootcss.com/p/font-awesome/assets/font/fontawesome-webfont.woff?v=3.0.1"],
 				['Font.loadfont', 'Font Awesome 5 Brands', "https://use.fontawesome.com/releases/v5.11.2/webfonts/fa-brands-400.woff2"],
 				['Js', 'https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js', [
-					['Js', 'assets/js/jquery.scrollex.min.js'],
-					['Js', 'assets/js/jquery.scrolly.min.js'],
-					['Js', 'assets/js/browser.min.js'],
-					['Js', 'assets/js/breakpoints.min.js', ['Js#mainjs', 'assets/js/main.js']],
-					['Js', 'assets/js/util.js']
+					['Js', baseurl + 'assets/js/jquery.scrollex.min.js'],
+					['Js', baseurl + 'assets/js/jquery.scrolly.min.js'],
+					['Js', baseurl + 'assets/js/browser.min.js'],
+					['Js', baseurl + 'assets/js/breakpoints.min.js', ['Js#mainjs', baseurl + 'assets/js/main.js']],
+					['Js', baseurl + 'assets/js/util.js']
 				]],
 				['CSS', "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"]
 			];
