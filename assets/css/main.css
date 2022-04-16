@@ -3679,10 +3679,12 @@ body.is-preload #intro:not(.hidden) + #header + #nav {
 
 #main > .posts > article {
     border-color: #eeeeee;
-    border-left-width: 2px;
+    /*border-left-width: 2px;*/
     border-style: solid;
-    border-top-width: 2px;
+    /*border-top-width: 2px;*/
     text-align: center;
+	border-bottom: solid 2px #e2e2e2;
+    border-right: solid 2px #e2e2e2;
 }
 
 #main > .posts > article > :last-child {
@@ -3977,11 +3979,12 @@ body.is-preload #intro:not(.hidden) + #header + #nav {
     -ms-flex-shrink: 1;
     flex-shrink: 1;
     padding: 4rem 4rem 2rem 4rem ;
-    border-left: solid 2px #e2e2e2;
+    /*border-left: solid 2px #e2e2e2;*/
 }
 
 #footer > section:first-child {
     border-left: 0;
+    border-right: solid 2px #e2e2e2;
 }
 
 #footer > section.split {
@@ -4073,6 +4076,10 @@ body.is-preload #intro:not(.hidden) + #header + #nav {
 }
 
 @media screen and (max-width: 980px) {
+	#footer > section:first-child {
+		border-right-width: 0px;
+	}
+
     #footer {
         display: block;
     }
