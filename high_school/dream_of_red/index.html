@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+    <head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    </head>
+    <body>
+		<ul id="lister"></ul>
+		<script src="https://cdn.jsdelivr.net/gh/HowardZhangdqs/geniusload@v1.1.2/geniusload.min.js" type="text/javascript"></script>
+		<script>
+			let baseurl = "https://cdn.jsdelivr.net/gh/HowardZhangdqs/The-dream-of-the-dream-of-Red-Mansion/summary/";
+			new geniusload([
+				["js", baseurl + "build.js"],
+				["js", baseurl + "catalogue.min.js", function() {
+					build();
+				}]
+			]);
+		</script>
+	</body>
+</html>
