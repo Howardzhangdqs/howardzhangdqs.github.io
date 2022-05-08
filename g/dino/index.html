@@ -5,8 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no">
         <title>谷歌小恐龙：完全破解2</title>
         <link rel="stylesheet" href="index.css">
-        <link rel="shortcut icon" href="../favicon.ico">
-        <script src="../js/jquery.min.js"></script>
+        <!--link rel="shortcut icon" href="../favicon.ico"-->
+        <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     </head>
     <body id="t" class="offline" onresize="hzchpos()" oncontextmenu="return false">
         <div id="main-frame-error" class="interstitial-wrapper">
@@ -24,20 +24,7 @@
         </div>
         <div id="hzin1" class="box" style="position:absolute; top:233px">
             <table border="0" width="100%">
-                <tr>
-                    <td>
-                        <div>
-                            无敌模式
-							<input type="checkbox" class="switch" onclick="hzswitchgO()">
-                        </div>
-                    </td>
-                    <td>
-                        <div>
-                            自动运行(开发中，尚不可用)
-							<input type="checkbox" class="switch" onclick="hzautogO()">
-                        </div>
-                    </td>
-                </tr>
+                <tr><td><div>无敌模式<input type="checkbox" class="switch" onclick="hzswitchgO()"></div></td><td><div>自动运行(开发中，尚不可用)<input type="checkbox" class="switch" onclick="hzautogO()"></div></td></tr>
                 <tr>
                     <td colspan="5">
                         <div>
@@ -96,25 +83,14 @@
                 var hzkey = ((window.innerWidth - 600) / 2).toString() + "px";
                 var hzp11 = document.getElementById('hzin1');
                 var hzp12 = document.getElementById('hzin2');
-                //var hzp21 = document.getElementById('hzbtup');
-                //var hzp22 = document.getElementById('hzbtdo');
                 hzp11.style.left = hzkey;
                 hzp12.style.left = hzkey;
-                //hzp21.style.bottom = "20px";
-                //hzp22.style.bottom = "20px";
             }
-            /*
-			$(document).ready(function(){
-				$("body").scroll(function() {
-					hzchpos();
-				});
-			});
-			*/
             hzchpos();
         </script>
         <div id="hzbtup" class="boxbtn" onselectstart="return false" onselect="document.selection.empty()">△</div>
         <div id="hzbtdo" class="boxbtn" onselectstart="return false" onselect="document.selection.empty()">▽</div>
-        <script src="index.js"></script>
+        <script src="index.min.js"></script>
         <style>
             .box {
                 width: 600px;
