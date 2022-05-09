@@ -1,11 +1,10 @@
 <!doctype html>
 <html>
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no">
+        <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=no">
         <title>谷歌小恐龙：完全破解2</title>
         <link rel="stylesheet" href="index.css">
-        <!--link rel="shortcut icon" href="../favicon.ico"-->
+        <link rel="shortcut icon" href="favicon.ico">
         <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     </head>
     <body id="t" class="offline" onresize="hzchpos()" oncontextmenu="return false">
@@ -72,7 +71,7 @@
                 <tr>
                     <td>
                         <div>
-                            <button class="btn" href="https://github.com/wayou/t-rex-runner/blob/gh-pages/README.md" target="_blank">去Github上看看其他的小恐龙</button>
+                            <button class="btn" onclick="window.open('https://github.com/wayou/t-rex-runner/blob/gh-pages/README.md')" target="_blank">去Github上看看其他的小恐龙</button>
                         </div>
                     </td>
                 </tr>
@@ -87,79 +86,6 @@
                 hzp12.style.left = hzkey;
             }
             hzchpos();
-        </script>
-        <div id="hzbtup" class="boxbtn" onselectstart="return false" onselect="document.selection.empty()">△</div>
-        <div id="hzbtdo" class="boxbtn" onselectstart="return false" onselect="document.selection.empty()">▽</div>
-        <script src="index.min.js"></script>
-        <style>
-            .box {
-                width: 600px;
-                background: #fff;
-                color: #000;
-                text-align: center;
-                margin: 20px auto;
-                box-shadow: 5px 5px 20px #000;
-                border-radius: 10px;
-                line-height: 20px;
-                transition: transform .4s;
-            }
-
-            .boxbtn {
-                font-size: 40px;
-                position: absolute;
-                border-radius: 50%;
-                height: 50px;
-                width: 50px;
-                bottom: 20px;
-                background: #fff;
-                color: #000;
-                text-align: center;
-                margin: 20px auto;
-                box-shadow: 5px 5px 20px #000;
-                transition-duration: 0.2s;
-            }
-
-            .boxbtn:active {
-                background: #BBB;
-            }
-
-            .box.inverted {
-                filter: invert(1);
-                transition-duration: 0.4s;
-            }
-
-            .btn {
-                line-height: 1.499;
-                position: relative;
-                display: inline-block;
-                font-weight: 400;
-                white-space: nowrap;
-                text-align: center;
-                background-image: none;
-                border: 1px solid transparent;
-                -webkit-box-shadow: 0 2px 0 rgba(0,0,0,0.015);
-                box-shadow: 0 2px 0 rgba(0,0,0,0.015);
-                cursor: pointer;
-                -webkit-transition: all .3s cubic-bezier(.645, .045, .355, 1);
-                transition: all .3s cubic-bezier(.645, .045, .355, 1);
-                -webkit-user-select: none;
-                -moz-user-select: none;
-                -ms-user-select: none;
-                user-select: none;
-                -ms-touch-action: manipulation;
-                touch-action: manipulation;
-                height: 28px;
-                padding: 0 4px;
-                font-size: 14px;
-                border-radius: 4px;
-                color: rgba(0,0,0,0.65);
-                background-color: #fff;
-                border-color: #000;
-                color: #000;
-                background-color: #ffffff;
-                border-color: #000;
-                -webkit-box-shadow: 0 2px 0 rgba(0,0,0,0.045);
-            }
-        </style>
+        </script><div id="hzbtup" class="boxbtn" onselectstart="return false" onselect="document.selection.empty()">△</div><div id="hzbtdo" class="boxbtn" onselectstart="return false" onselect="document.selection.empty()">▽</div><script src="index.min.js"></script><style>.box{width:600px;background:#fff;color:#000;text-align:center;margin:20px auto;box-shadow:5px 5px 20px#000;border-radius:10px;line-height:20px;transition:transform.4s}.boxbtn{font-size:40px;position:absolute;border-radius:50%;height:50px;width:50px;bottom:20px;background:#fff;color:#000;text-align:center;margin:20px auto;box-shadow:5px 5px 20px#000;transition-duration:0.2s}.boxbtn:active{background:#BBB}.box.inverted{filter:invert(1);transition-duration:0.4s}.btn{line-height:1.499;position:relative;display:inline-block;font-weight:400;white-space:nowrap;text-align:center;background-image:none;border:1px solid transparent;-webkit-box-shadow:0 2px 0 rgba(0,0,0,0.015);box-shadow:0 2px 0 rgba(0,0,0,0.015);cursor:pointer;-webkit-transition:all.3s cubic-bezier(.645,.045,.355,1);transition:all.3s cubic-bezier(.645,.045,.355,1);-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;-ms-touch-action:manipulation;touch-action:manipulation;height:28px;padding:0 4px;font-size:14px;border-radius:4px;color:rgba(0,0,0,0.65);background-color:#fff;border-color:#000;color:#000;background-color:#ffffff;border-color:#000;-webkit-box-shadow:0 2px 0 rgba(0,0,0,0.045)}</style>
     </body>
 </html>
