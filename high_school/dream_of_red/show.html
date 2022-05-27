@@ -6,11 +6,11 @@
     </head>
     <body>
 		<p id="para" style="text-indent: 2em;"></p>
-		<script src="https://cdn.jsdelivr.net/gh/HowardZhangdqs/geniusload@v1.1.2/geniusload.min.js" type="text/javascript"></script>
+		<script src="/geniusload.min.js" type="text/javascript"></script>
 		<script>
 			window.onload = function() {
 				var loc = window.location.href;
-				new geniusload(["js", "https://cdn.jsdelivr.net/gh/HowardZhangdqs/The-dream-of-the-dream-of-Red-Mansion/summary/dataset/" + loc.split("?")[1] + ".js", function() {
+				new geniusload(["js", "dataset/" + loc.split("?")[1] + ".js", function() {
 					document.getElementById("para").innerHTML = "<p>" + data.replace(/\n\n/g, "\n").replace(/\n\n/g, "\n").replace(/\n/g, "<p>");
 				}])
 			};
