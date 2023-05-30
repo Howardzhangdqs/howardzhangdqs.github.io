@@ -1,0 +1,22 @@
+{
+  "name": "howardzhangdqs.github.io",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "compress": "html-minifier --collapse-whitespace --remove-comments --minify-css true --minify-js true -o index.html index.max.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Howardzhangdqs/howardzhangdqs.github.io.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Howardzhangdqs/howardzhangdqs.github.io/issues"
+  },
+  "homepage": "https://github.com/Howardzhangdqs/howardzhangdqs.github.io#readme",
+  "dependencies": {
+    "html-minifier": "^4.0.0"
+  }
+}
