@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<!-- saved from url=(0054)https://devvote.odb.sh.cn/SHPTGZXYSPHGXCJCX/index.html -->
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, user-scalable=no,  initial-scale=1.0">
+    <title>2023上海市普通高中学业水平合格性考试成绩查询—东方网</title>
+    <link rel="stylesheet" type="text/css" href="./exam_files/cf.css">
+</head>
+
+<body>
+    <div class="whole">
+        <div class="jieguo" style="display: block;">
+            <div class="logo"><img src="./exam_files/logo.png"></div>
+            <div class="jgkuang">
+                <div class="kslogo"><img src="./exam_files/mtit.png"></div>
+                <div class="changci" contenteditable="true">2023年6月上海市普通高中学业水平合格性考试成绩查询</div>
+                <div class="ksname">
+                    <div class="xx">姓名：<span id="cjxx" contenteditable="true">野兽先辈</span></div>
+                    <div class="xx">报名号：<span id="cjid" contenteditable="true">210420114514</span></div>
+
+                    <div class="xx">考试时间：<span contenteditable="true">2023年6月</span></div>
+                </div>
+
+                <div id="mood">
+                    <div class="cjresult" style="margin-top: 1em; margin-bottom: 1em;">
+                        <div class="qukuai" style="width: auto">
+                            上面的标题、姓名、报名号、考试时间可以直接点击编辑。<br>
+                            由于我太懒不想搞，所以标题、姓名、报名号、考试时间需要到生成成绩条的页面里面改，在这个页面里改没用的。<br>
+                            下面的科目和成绩编辑完了点“ok了”按钮，然后就能生成成绩条。如果一组数据中科目和成绩任意一个留空，则该条数据整个都不会显示
+                        </div>
+                    </div>
+                    <div class="cjresult" style="margin-top: 1em; margin-bottom: 1em;">
+
+                        <table class="center qukuai" id="switch" style="width: auto">
+                            <thead>
+                                <th>科目</th>
+                                <th>成绩</th>
+                            </thead>
+                            <tr>
+                                <th><input></input></th>
+                                <th><input></input></th>
+                            </tr>
+                            <tr>
+                                <th><input></input></th>
+                                <th><input></input></th>
+                            </tr>
+                            <tr>
+                                <th><input></input></th>
+                                <th><input></input></th>
+                            </tr>
+                            <tr>
+                                <th><input></input></th>
+                                <th><input></input></th>
+                            </tr>
+                            <tr>
+                                <th><input></input></th>
+                                <th><input></input></th>
+                            </tr>
+                            <tr>
+                                <th><input></input></th>
+                                <th><input></input></th>
+                            </tr>
+                            <tr>
+                                <th><input></input></th>
+                                <th><input></input></th>
+                            </tr>
+                            <tr>
+                                <th><input></input></th>
+                                <th><input></input></th>
+                            </tr>
+                            <tr>
+                                <th><input></input></th>
+                                <th><input></input></th>
+                            </tr>
+                            <tr>
+                                <th><input></input></th>
+                                <th><input></input></th>
+                            </tr>
+                        </table>
+                    </div>
+                    <button id="okbtn" style="width: 100%;">OK了</button>
+                </div>
+
+                <div class="cjresult" id="main">
+
+
+                </div>
+                <div class="tishi2" style="line-height: 20px;">
+                    <p>注：1.考试成绩以最终下发的成绩单为准。</p>
+                    <p><span style="visibility:hidden;">注：</span>2."/"表示本次未报考该科目的考试，"Q"表示该科目考试缺考。</p>
+                </div>
+
+                <div class="zhang"><img src="./exam_files/zhang.png"></div>
+                <div class="back">
+                    <div class="dayin" onclick="javascript:window.print();">打印</div>
+                    <div class="fanhui" onclick="window.location = window.location.origin + window.location.pathname">返回
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="foot">
+            东方网(eastday.com)版权所有，未经授权禁止复制或建立镜像
+        </div>
+    </div>
+    <script>
+
+        const StringToBase64 = (str) => {
+            return window.btoa(unescape(encodeURIComponent(str)));
+        }
+
+        const Base64ToString = (str) => {
+            return decodeURIComponent(escape(window.atob(str)))
+        }
+
+        const switchMood = function () {
+            const $switch = document.getElementById("switch");
+            const $okbtn = document.getElementById("okbtn");
+            document.getElementById("main").style.display = "none";
+            const $input = document.querySelectorAll("#switch > tbody > tr > th > input");
+
+            const data = ["思想政治", "合格", "历史", "合格", "地理", "合格", "物理", "合格", "化学", "合格", "生物学", "合格", "信息技术", "/", "物理技能", "合格", "化学技能", "合格", "生物学技能", "合格"];
+            for (let i in $input) {
+                $input[i].value = data[i];
+            }
+
+            $okbtn.addEventListener("click", () => {
+
+                console.log($input);
+                const res = [];
+                $input.forEach((val) => {
+                    res.push(val.value);
+                });
+                console.log(res);
+                window.location = window.location.origin + window.location.pathname + "?data=" + StringToBase64(JSON.stringify(res));
+            });
+        }
+
+        window.onload = function () {
+            const $main = document.getElementById("main");
+            const url = new URL(window.location.href);
+            console.log(url);
+            let data = url.searchParams.has("data");
+            console.log(data);
+
+            if (!url.searchParams.has("data")) {
+                switchMood();
+                return;
+            }
+
+            try {
+                if (data) data = url.searchParams.get("data")
+                data = Base64ToString(data);
+                if (!data) {
+                    throw new Error("No Data Found!");
+                }
+            } catch (e) {
+                console.error(e);
+                switchMood();
+                return;
+            }
+
+            console.log(data);
+            document.getElementById("mood").style.display = "none";
+            const dom = '<div class="qukuai"><p>{1}</p><p>{2}</p></div>';
+            $main.innerHTML = dom;
+
+            data = JSON.parse(data);
+
+            let res = "";
+            for (let i = 0; i < data.length; i += 2) {
+                if (data[i] && data[i + 1])
+                    res += dom.replace("{1}", data[i]).replace("{2}", data[i + 1]);
+            }
+            $main.innerHTML = res;
+        }
+
+    </script>
+</body>
+
+</html>
