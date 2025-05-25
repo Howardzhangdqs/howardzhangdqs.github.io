@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💕 约会地点转盘抽奖 💕</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            color: #764ba2;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+
+        .wheel-container {
+            display: flex;
+            gap: 30px;
+            align-items: flex-start;
+        }
+
+        .wheel-section {
+            flex: 1;
+            text-align: center;
+        }
+
+        .wheel-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .wheel {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+            border: 8px solid #764ba2;
+            transition: transform 3s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+        }
+
+        .wheel svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .wheel-text {
+            position: absolute;
+            font-weight: bold;
+            font-size: 14px;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            white-space: nowrap;
+        }
+
+        .wheel-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 40px;
+            height: 40px;
+            background: #764ba2;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            z-index: 10;
+        }
+
+        .pointer {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-top: 25px solid #ff4757;
+            z-index: 5;
+        }
+
+        .controls {
+            flex: 1;
+            max-width: 400px;
+        }
+
+        .spin-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 25px;
+            cursor: pointer;
+            margin: 20px auto;
+            display: block;
+            transition: transform 0.3s;
+        }
+
+        .spin-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .spin-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .options-section {
+            margin-top: 20px;
+        }
+
+        .option-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border: 2px solid transparent;
+            transition: border-color 0.3s;
+        }
+
+        .option-item:hover {
+            border-color: #667eea;
+        }
+
+        .option-input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .angle-input {
+            width: 80px;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .remove-btn {
+            background: #ff4757;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .add-btn {
+            background: #2ed573;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .result {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #764ba2;
+        }
+
+        .instructions {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #2196f3;
+        }
+
+        .instructions h3 {
+            color: #1976d2;
+            margin-bottom: 10px;
+        }
+
+        .total-angle {
+            text-align: center;
+            margin: 10px 0;
+            font-weight: bold;
+            color: #764ba2;
+        }
+
+        /* 浮动爱心动画 */
+        .floating-hearts {
+            position: fixed;
+            top: -20px;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            color: #ff6b6b;
+            animation: float 6s infinite linear;
+            opacity: 0.7;
+        }
+
+        @keyframes float {
+            0% {
+                opacity: 0;
+                transform: translateY(-10vh) rotate(360deg);
+            }
+
+            10% {
+                opacity: 0.7;
+            }
+
+            90% {
+                opacity: 0.7;
+            }
+
+            100% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+        }
+
+        /* 增加渐变背景的爱心元素 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                radial-gradient(circle at 20% 80%, rgba(255, 107, 107, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(221, 160, 221, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(255, 182, 193, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 浮动爱心容器 -->
+    <div class="floating-hearts" id="floatingHearts"></div>
+
+    <div class="container">
+        <h1>💕 约会地点转盘抽奖 💕</h1>
+
+        <div class="instructions">
+            <h3>💖 使用说明：</h3>
+            <p>1. 💑 在右侧添加或编辑约会地点</p>
+            <p>2. 💘 调整每个地点的角度大小（角度越大，中奖概率越高）</p>
+            <p>3. 🎯 确保总角度为360度</p>
+            <p>4. 💝 点击"开始抽奖"按钮转动转盘</p>
+        </div>
+
+        <div class="wheel-container">
+            <div class="wheel-section">
+                <div class="wheel-wrapper">
+                    <div class="pointer"></div>
+                    <div class="wheel" id="wheel"></div>
+                    <div class="wheel-center">抽奖</div>
+                </div>
+                <button class="spin-btn" id="spinBtn" onclick="spin()">💕 开始抽奖 💕</button>
+                <div class="result" id="result"></div>
+            </div>
+
+            <div class="controls">
+                <div class="total-angle" id="totalAngle">总角度: 0°</div>
+
+                <div class="options-section">
+                    <h3>💝 约会地点设置：</h3>
+                    <div id="optionsList"></div>
+                    <button class="add-btn" onclick="addOption()">💗 添加新地点 💗</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let options = [
+            { name: '💒 酒店', angle: 300 },
+            { name: '📚 图书馆', angle: 30 },
+            { name: '🛍️ 商场', angle: 30 },
+        ];
+
+        var last_angle = 0;
+
+        let isSpinning = false;
+        let currentRotation = 0;
+
+        const colors = [
+            '#ff6b6b', '#4ecdc4', '#45b7d1', '#96ceb4',
+            '#ffeaa7', '#dda0dd', '#ff7675', '#74b9ff',
+            '#fd79a8', '#6c5ce7', '#a29bfe', '#fd79a8'
+        ];
+
+        function updateTotalAngle() {
+            const total = options.reduce((sum, option) => sum + option.angle, 0);
+            document.getElementById('totalAngle').textContent = `总角度: ${total}°`;
+
+            if (total !== 360) {
+                document.getElementById('totalAngle').style.color = '#ff4757';
+            } else {
+                document.getElementById('totalAngle').style.color = '#2ed573';
+            }
+        }
+
+        function renderOptions() {
+            const optionsList = document.getElementById('optionsList');
+            optionsList.innerHTML = '';
+
+            options.forEach((option, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'option-item';
+                optionDiv.innerHTML = `
+                    <input type="text" class="option-input" value="${option.name}" 
+                           onchange="updateOptionName(${index}, this.value)" placeholder="💕 约会地点">
+                    <input type="number" class="angle-input" value="${option.angle}" 
+                           onchange="updateOptionAngle(${index}, this.value)" 
+                           min="1" max="360" placeholder="角度">
+                    <button class="remove-btn" onclick="removeOption(${index})">删除</button>
+                `;
+                optionsList.appendChild(optionDiv);
+            });
+
+            updateTotalAngle();
+            renderWheel();
+        }
+
+        function renderWheel() {
+            const wheel = document.getElementById('wheel');
+            wheel.innerHTML = '';
+
+            // 创建 SVG 元素
+            const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            svg.setAttribute('viewBox', '0 0 300 300');
+
+            let currentAngle = 0;
+            const radius = 150;
+            const center = 150;
+
+            options.forEach((option, index) => {
+                const angle = option.angle;
+                const startAngle = currentAngle;
+                const endAngle = currentAngle + angle;
+
+                // 转换为弧度
+                const startRad = (startAngle - 90) * Math.PI / 180;
+                const endRad = (endAngle - 90) * Math.PI / 180;
+
+                // 计算路径坐标
+                const x1 = center + radius * Math.cos(startRad);
+                const y1 = center + radius * Math.sin(startRad);
+                const x2 = center + radius * Math.cos(endRad);
+                const y2 = center + radius * Math.sin(endRad);
+
+                // 创建路径元素
+                const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+
+                // 大弧标志：如果角度大于180度则为1，否则为0
+                const largeArcFlag = angle > 180 ? 1 : 0;
+
+                // 构建SVG路径
+                const pathData = [
+                    `M ${center} ${center}`, // 移动到中心点
+                    `L ${x1} ${y1}`,         // 画线到起始点
+                    `A ${radius} ${radius} 0 ${largeArcFlag} 1 ${x2} ${y2}`, // 画弧到结束点
+                    'Z'                      // 闭合路径
+                ].join(' ');
+
+                path.setAttribute('d', pathData);
+                path.setAttribute('fill', colors[index % colors.length]);
+                path.style.cursor = 'pointer';
+
+                svg.appendChild(path);
+
+                // 添加文字
+                const textAngle = startAngle + angle / 2;
+                const textRadius = 120; // 文字距离中心的距离
+                const textRad = (textAngle - 90) * Math.PI / 180;
+                const textX = center + textRadius * Math.cos(textRad);
+                const textY = center + textRadius * Math.sin(textRad);
+
+                const textElement = document.createElement('div');
+                textElement.className = 'wheel-text';
+                textElement.style.left = `${(textX / 300) * 100}%`;
+                textElement.style.top = `${(textY / 300) * 100}%`;
+
+                // 调整文字旋转角度，避免倒置
+                let textRotation = textAngle;
+                if (textAngle > 90 && textAngle < 270) {
+                    textRotation = textAngle + 180;
+                }
+                textElement.style.transform = `translate(-50%, -50%) rotate(${textRotation}deg)`;
+                textElement.textContent = option.name;
+
+                wheel.appendChild(textElement);
+
+                currentAngle += angle;
+            });
+
+            wheel.appendChild(svg);
+        }
+
+        function updateOptionName(index, name) {
+            options[index].name = name;
+            renderWheel();
+        }
+
+        function updateOptionAngle(index, angle) {
+            options[index].angle = parseInt(angle) || 0;
+            updateTotalAngle();
+            renderWheel();
+        }
+
+        function addOption() {
+            options.push({ name: '💝 新地点', angle: 30 });
+            renderOptions();
+        }
+
+        function removeOption(index) {
+            if (options.length > 2) {
+                options.splice(index, 1);
+                renderOptions();
+            } else {
+                alert('💕 至少需要保留两个选项！');
+            }
+        }
+
+        function spin() {
+            const totalAngle = options.reduce((sum, option) => sum + option.angle, 0);
+
+            if (totalAngle !== 360) {
+                alert('❗ 请确保总角度为360度！');
+                return;
+            }
+
+            if (isSpinning) return;
+
+            isSpinning = true;
+            document.getElementById('spinBtn').disabled = true;
+            document.getElementById('result').textContent = '';
+
+            // wheel.style.transform = `rotate(0deg)`;
+
+            // 随机旋转角度 (3-5圈 + 随机角度)
+            const randomAngle = Math.random() * 360;
+            const spins = 3 + Math.random() * 2; // 3-5圈
+            const finalRotation = last_angle + currentRotation + (spins * 360) + randomAngle;
+            last_angle = finalRotation;
+
+            const wheel = document.getElementById('wheel');
+            wheel.style.transform = `rotate(${finalRotation}deg)`;
+            currentRotation = finalRotation % 360;
+
+            // 计算结果
+            setTimeout(() => {
+                const normalizedAngle = (360 - (currentRotation % 360)) % 360;
+                let currentSegmentAngle = 0;
+                let selectedOption = null;
+
+                for (let option of options) {
+                    if (normalizedAngle >= currentSegmentAngle && normalizedAngle < currentSegmentAngle + option.angle) {
+                        selectedOption = option;
+                        break;
+                    }
+                    currentSegmentAngle += option.angle;
+                }
+
+                document.getElementById('result').innerHTML = `
+                    💐 恭喜！今天的约会地点是：💐<br>
+                    <span style="font-size: 30px; color: #ff6b6b;">💗 ${selectedOption.name} 💗</span><br>
+                    <span style="font-size: 16px; color: #667eea;">祝你们度过愉快的约会时光～ 💕</span>
+                `;
+
+                isSpinning = false;
+                document.getElementById('spinBtn').disabled = false;
+            }, 3000);
+        }
+
+        // 初始化
+        renderOptions();
+
+        // 创建浮动爱心效果
+        function createFloatingHeart() {
+            const hearts = ['💕', '💖', '💗', '💘', '💝', '💞', '💟', '❤️', '🧡', '💛', '💚', '💙', '💜', '🤍', '🖤', '💐', '🌹'];
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+
+            // 随机位置
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDuration = (Math.random() * 3 + 4) + 's';
+            heart.style.animationDelay = Math.random() * 2 + 's';
+
+            document.getElementById('floatingHearts').appendChild(heart);
+
+            // 6秒后移除元素
+            setTimeout(() => {
+                if (heart.parentNode) {
+                    heart.parentNode.removeChild(heart);
+                }
+            }, 100000);
+        }
+
+        // 定期创建爱心
+        setInterval(createFloatingHeart, 1500);
+
+        // 页面加载完成后立即创建几个爱心
+        setTimeout(() => {
+            for (let i = 0; i < 3; i++) {
+                setTimeout(createFloatingHeart, i * 500);
+            }
+        }, 1000);
+    </script>
+</body>
+
+</html>
